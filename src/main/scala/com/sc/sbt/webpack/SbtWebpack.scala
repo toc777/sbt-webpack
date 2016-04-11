@@ -20,8 +20,10 @@ object SbtWebpack extends AutoPlugin {
   override def requires = SbtWeb
 
   override def trigger = AllRequirements
+  
+  val autoImport = Import
 
-  import Import.{webpack, webpackConfig}
+  import autoImport.{webpack, webpackConfig}
 
   override def projectSettings = Seq(
     webpackConfig in webpack := None,
