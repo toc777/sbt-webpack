@@ -39,6 +39,11 @@ webpackConfig in webpack := [location of config file]
 ```
 (if not set, defaults to baseDirectory / "webpack.config.js")
 
+If you want SbtJsEngine to install the node modules in your package.json before running webpack (required if you haven't already locally installed webpack):
+```scala
+webpack <<= webpack dependsOn(npmNodeModules in Assets)
+```
+
 
 Contribution policy
 -------------------

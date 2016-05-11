@@ -7,7 +7,7 @@ resolvers += Resolver.typesafeRepo("releases")
 addSbtPlugin("com.typesafe.sbt" % "sbt-js-engine" % "1.1.3")
 
 lazy val commonSettings = Seq(
-  version in ThisBuild := "1.0.0",
+  version in ThisBuild := "1.0.1",
   organization in ThisBuild := "com.sc.sbt"
 )
 

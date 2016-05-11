@@ -28,7 +28,7 @@ object SbtWebpack extends AutoPlugin {
   override def projectSettings = Seq(
     webpackConfig in webpack := None,
     resourceManaged in webpack := webTarget.value / webpack.key.label,
-    webpack := runWebpack.dependsOn(webJarsNodeModules in Plugin).dependsOn(npmNodeModules in Assets).value
+    webpack := runWebpack.value
   )
   
   def runWebpack: Def.Initialize[Task[Pipeline.Stage]] = Def.task {
