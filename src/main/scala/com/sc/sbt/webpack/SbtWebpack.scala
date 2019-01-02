@@ -1,13 +1,13 @@
 package com.sc.sbt.webpack
 
-import com.typesafe.sbt.web.SbtWeb
+import com.typesafe.sbt.web.{Compat, SbtWeb}
 import com.typesafe.sbt.jse.JsTaskImport.JsTaskKeys.timeoutPerSource
 import com.typesafe.sbt.jse.SbtJsTask
 import com.typesafe.sbt.web.pipeline.Pipeline
-import com.typesafe.sbt.jse.SbtJsEngine.autoImport.JsEngineKeys.{command, engineType, npmNodeModules}
-import sbt.Keys.{resourceManaged, streams, baseDirectory, state}
-import SbtWeb.autoImport.{WebKeys, Plugin, Assets}
-import WebKeys.{webTarget, webJarsNodeModules, nodeModuleDirectories}
+import com.typesafe.sbt.jse.SbtJsEngine.autoImport.JsEngineKeys.{command, engineType}
+import sbt.Keys.{baseDirectory, resourceManaged, state, streams}
+import SbtWeb.autoImport.{Plugin, WebKeys}
+import WebKeys.{nodeModuleDirectories, webTarget}
 import sbt._
 
 object Import {
@@ -40,7 +40,7 @@ object SbtWebpack extends AutoPlugin {
         streams.value.log.info("Bundling assets with Webpack")
         
         SbtWeb.syncMappings(
-            streams.value.cacheDirectory,
+            Compat.cacheStore(streams.value, "webpack-cache"),
             mappings,
             outputDir
         )
@@ -61,7 +61,7 @@ object SbtWebpack extends AutoPlugin {
             outputDir.***.get.toSet
        }
 
-       runUpdate(outputDir.***.get.toSet).filter(_.isFile).pair(relativeTo(outputDir)).toSeq
+       runUpdate(outputDir.***.get.toSet).filter(_.isFile).pair(relativeTo(outputDir))
   }
   
 }
